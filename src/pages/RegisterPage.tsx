@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import api from "../services/config";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, {  useState } from "react";
+import { useNavigate} from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 type initialStateType = {
   userName: string;
@@ -14,10 +14,9 @@ const initialState: initialStateType = {
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [values, setValues] = useState<initialStateType>(initialState);
-
+  const auth=useAuth()
   const [submitted, setSubmitted] = useState(false);
   const [valid, setValid] = useState(false);
 
@@ -36,36 +35,11 @@ const RegisterPage: React.FC = () => {
       const postData = new FormData();
       postData.append("userName", values.userName);
       postData.append("password", values.password);
-      try {
-        const response = await api.post('/api/auth/register', postData);
-
-        console.log("Form sent successfully!", response.data);
-      } catch (error) {
-        console.error("Failed to send email:", error);
-      }
+      auth?.registerAction(postData)
+      return
     }
   };
 
-  useEffect(() => {
-    const token = new URLSearchParams(location.search).get("token");
-    const verifyForm = async () => {
-      try {
-        const response = await api.get("/api/auth/register", {
-          params: { token },
-        });
-        console.log("Form verified successfully!", response.data);
-        navigate("/api/admin/products");
-      } catch (error) {
-        console.error("Failed to verify Form:", error);
-      }
-    };
-
-    if (token) {
-      verifyForm();
-    } else {
-      console.error("Form verification token not found!");
-    }
-  }, [navigate,location.search]);
 
   return (
     <div className="w-96 m-auto bg-slate-300 shadow-lg rounded-md">

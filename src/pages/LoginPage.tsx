@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
-import { Navigate } from "react-router-dom";
 
 type initialStateType = {
   userName: string;
@@ -16,9 +15,9 @@ type SubmittedType = boolean;
 
 const LoginPage = () => {
   const [values, setValues] = useState(initialState);
-  const auth = useAuth();
   const [submitted, setSubmitted] = useState<SubmittedType>(false);
   const [valid, setValid] = useState(false);
+  const auth = useAuth();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.name;

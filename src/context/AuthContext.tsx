@@ -10,6 +10,7 @@ type UserType = {
 interface AuthContextType {
   token: string | null;
   user: UserType;
+  registerAction: (data: FormData) => Promise<void>;
   loginAction: (data: FormData) => Promise<void>;
   logoutAction: () => void;
 }
@@ -37,12 +38,32 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   });
   const [token, setToken] = useState<TokenType>(localStorage.getItem("site"));
   const navigate = useNavigate();
+
+  const registerAction = async (data: FormData) => {
+    try {
+      const token: TokenType = await api.post("/api/auth/register", data);
+      if (token) {
+        setUser({
+          userName: data.get("userName") as string,
+          password: data.get("password") as string,
+        });
+        setToken(token);
+        localStorage.setItem("site", token);
+        navigate("/api/admin/products");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const loginAction = async (data: FormData): Promise<void> => {
     try {
       const token: TokenType = await api.post("/api/auth/login", data);
       console.log(`helloo is here =>${token}`);
       if (token) {
-        setUser({ userName: data.get("userName") as string, password: data.get("password") as string });
+        setUser({
+          userName: data.get("userName") as string,
+          password: data.get("password") as string,
+        });
         setToken(token);
         localStorage.setItem("site", token);
         navigate("/api/admin/products");
@@ -63,7 +84,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   };
   return (
     <div>
-      <AuthContext.Provider value={{ token, user, loginAction, logoutAction }}>
+      <AuthContext.Provider value={{ token, user, registerAction,loginAction, logoutAction }}>
         {children}
       </AuthContext.Provider>
     </div>
