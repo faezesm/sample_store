@@ -1,5 +1,5 @@
-import React, {  useState } from "react";
-import { useNavigate} from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 type initialStateType = {
@@ -13,10 +13,8 @@ const initialState: initialStateType = {
 };
 
 const RegisterPage: React.FC = () => {
-  const navigate = useNavigate();
-
   const [values, setValues] = useState<initialStateType>(initialState);
-  const auth=useAuth()
+  const auth = useAuth();
   const [submitted, setSubmitted] = useState(false);
   const [valid, setValid] = useState(false);
 
@@ -35,11 +33,10 @@ const RegisterPage: React.FC = () => {
       const postData = new FormData();
       postData.append("userName", values.userName);
       postData.append("password", values.password);
-      auth?.registerAction(postData)
-      return
+      auth?.registerAction(postData);
+      return;
     }
   };
-
 
   return (
     <div className="w-96 m-auto bg-slate-300 shadow-lg rounded-md">

@@ -38,7 +38,7 @@ const LoginPage = () => {
       return;
     }
   };
-  
+
   return (
     <div className="w-96 m-auto bg-slate-300 shadow-lg rounded-md">
       <h1 className="text-gray-800 text-center mt-40 font-black p-5">LOGIN</h1>

@@ -15,28 +15,18 @@ interface AuthContextType {
   logoutAction: () => void;
 }
 
-type Props = {
-  children: React.ReactNode;
-};
-
-// type resLogin = {
-//   data: {
-//     user: UserType;
-//   };
-//   token: string;
-//   message?: string;
-// };
-
 type TokenType = string | null;
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const AuthProvider: React.FC<Props> = ({ children }) => {
+const AuthProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
   const [user, setUser] = useState<UserType>({
     userName: "",
     password: "",
   });
-  const [token, setToken] = useState<TokenType>(localStorage.getItem("site"));
+  const [token, setToken] = useState<TokenType>(localStorage.getItem("accessToken"));
   const navigate = useNavigate();
 
   const registerAction = async (data: FormData) => {
@@ -48,25 +38,26 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
           password: data.get("password") as string,
         });
         setToken(token);
-        localStorage.setItem("site", token);
-        navigate("/api/admin/products");
+        localStorage.setItem("accessToken", token);
+        navigate("/admin/products");
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   const loginAction = async (data: FormData): Promise<void> => {
     try {
       const token: TokenType = await api.post("/api/auth/login", data);
-      console.log(`helloo is here =>${token}`);
+      console.log(token);
       if (token) {
         setUser({
           userName: data.get("userName") as string,
           password: data.get("password") as string,
         });
         setToken(token);
-        localStorage.setItem("site", token);
-        navigate("/api/admin/products");
+        localStorage.setItem("accessToken", token);
+        navigate("/admin/products");
       }
     } catch (error) {
       console.log(error);
@@ -74,17 +65,19 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   };
 
   const logoutAction = () => {
+    console.log("NONONO");
     setUser({
       userName: "",
       password: "",
-    }),
-      setToken(""),
-      localStorage.removeItem("site"),
-      navigate("/api/auth/login");
+    });
+    setToken("");
+    localStorage.removeItem("accessToken");
+    navigate("/auth/login");
   };
+
   return (
     <div>
-      <AuthContext.Provider value={{ token, user, registerAction,loginAction, logoutAction }}>
+      <AuthContext.Provider value={{ token, user, registerAction, loginAction, logoutAction }}>
         {children}
       </AuthContext.Provider>
     </div>
