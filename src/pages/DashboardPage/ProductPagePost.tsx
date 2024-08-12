@@ -12,8 +12,7 @@ type valuesType = {
 };
 
 const ProductPagePost = () => {
-  const categories = getCategory()
-  console.log("hello",categories)
+  const categories = getCategory();
   const [values, setValues] = useState<valuesType>({
     title: "",
     categoryID: 0,
@@ -30,47 +29,94 @@ const ProductPagePost = () => {
     setValues({ ...values, [name]: value });
   };
 
-  // const res = api.post("api/admin/category", data);
+  
+  const handleSelect = (e: React.FormEvent<HTMLOptionElement>) => {
+    const selectedCategoryID = e.target.value;
+    setValues((prevValues) => ({
+      ...prevValues,
+      categoryID: selectedCategoryID,
+    }));
+  };
+  
+  const handleClick = async () => {
+    console.log(values);
+    const res = await api({
+      method: "POST",
+      url: "api/admin/products",
+      headers: { "Content-Type": "application/json" },
+      data: values,
+    });
+    console.log(res);
+  };
+
   return (
-    <div>
-      <label htmlFor="title">Title</label>
+    <div className="flex flex-col  w-2/5  m-auto mt-20 h-full shadow-xl p-5 rounded-md bg-slate-300">
+      <h2 className="text-center mb-3 font-bold">Create Product</h2>
+      <label htmlFor="title" className="font-normal mb-2">
+        Title
+      </label>
       <input
+        className="p-2 rounded-md mb-1 "
         type="text"
         placeholder="Title"
         value={values.title}
         name="title"
         onChange={handleChange}
       />
-      <label htmlFor="realprice">RealPrice</label>
+      <label htmlFor="realprice" className="font-normal mb-2">
+        RealPrice
+      </label>
       <input
+        className="p-2 rounded-md mb-1 "
         type="text"
         placeholder="RealPrice"
         value={values.realPrice}
         name="realPrice"
         onChange={handleChange}
       />
-      <label htmlFor="salesPrice">SalesPrice</label>
+      <label htmlFor="salesPrice" className="font-normal mb-2">
+        SalesPrice
+      </label>
       <input
+        className="p-2 rounded-md mb-1 "
         type="text"
         placeholder="SalesPrice"
         value={values.salesPrice}
         name="salesPrice"
         onChange={handleChange}
       />
-      <label htmlFor="qty">Qauntiy</label>
+      <label htmlFor="qty" className="font-normal mb-2">
+        Qauntiy
+      </label>
       <input
+        className="p-2 rounded-md mb-1 "
         type="text"
         placeholder="Qauntiy"
         value={values.qty}
         name="qty"
         onChange={handleChange}
       />
-      <label htmlFor="">
+      <label htmlFor="" className="font-normal mb-2">
         Categories :
-        <select>
-          {categories.map(category => <option key={category.title}>{category.title}</option>)}
+        <select
+          className="w-full p-2 rounded-md text-gray-400 "
+          value={values.categoryID}
+          onChange={handleSelect}
+        >
+          {categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.title}
+            </option>
+          ))}
         </select>
       </label>
+      <button
+        className="bg-gray-700 p-4 rounded-md text-white mt-2"
+        type="submit"
+        onClick={handleClick}
+      >
+        Create
+      </button>
     </div>
   );
 };

@@ -15,7 +15,8 @@ const DashboardLayout: React.FC<{
     <>
       <div className="flex flex-row gap-4 p-2 bg-gray-400 shadow-md">
         <Link to="./admin/category">CreateCategory</Link>
-        <Link to="./admin/products">CreateProduct</Link>
+        <Link to="./create/products">CreateProduct</Link>
+        <Link to="./admin/products">ListProducts</Link>
         <button onClick={handleClick}>LogOut</button>
       </div>
       {children}

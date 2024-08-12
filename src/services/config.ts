@@ -3,6 +3,10 @@ export const baseURL = "http://192.168.0.120:8081";
 
 const api = axios.create({
   baseURL,
+  // headers: {
+  //   "Content-type": "application/json",
+  // },
+  // withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {

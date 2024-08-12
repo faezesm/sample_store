@@ -9,6 +9,9 @@ import ProductPage from "./pages/PublicPage/ProductPage";
 import CategoryPage from "./pages/PublicPage/CategoryPage";
 import ProductPagePost from "./pages/DashboardPage/ProductPagePost";
 import CategoryPagePost from "./pages/DashboardPage/CategoryPagePost";
+import ProductsPageGet from "./pages/DashboardPage/ProductsPageGet";
+import ProductEdit from "./pages/DashboardPage/ProductEdit";
+
 
 const IsAuth: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const token = localStorage.getItem("accessToken") ?? "";
@@ -33,10 +36,10 @@ function App() {
               <Route path="/category" element={<CategoryPage />} />
               //dashboard
               <Route
-                path="/admin/products/"
+                path="/create/products/"
                 element={
                   <IsAuth>
-                    <ProductPagePost/>
+                    <ProductPagePost />
                   </IsAuth>
                 }
               />
@@ -44,7 +47,23 @@ function App() {
                 path="/admin/category"
                 element={
                   <IsAuth>
-                    <CategoryPagePost/>
+                    <CategoryPagePost />
+                  </IsAuth>
+                }
+              />
+              <Route
+                path="/admin/products"
+                element={
+                  <IsAuth>
+                    <ProductsPageGet />
+                  </IsAuth>
+                }
+              />
+              <Route
+                path="/product/edit/:id"
+                element={
+                  <IsAuth>
+                    <ProductEdit/>
                   </IsAuth>
                 }
               />

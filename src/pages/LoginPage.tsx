@@ -75,7 +75,7 @@ const LoginPage = () => {
         )}
 
         <button className="bg-gray-700 my-5 p-4 rounded-md text-white" type="submit">
-          Register
+          Login
         </button>
       </form>
     </div>

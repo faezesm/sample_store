@@ -65,7 +65,6 @@ const AuthProvider: React.FC<{
   };
 
   const logoutAction = () => {
-    console.log("NONONO");
     setUser({
       userName: "",
       password: "",

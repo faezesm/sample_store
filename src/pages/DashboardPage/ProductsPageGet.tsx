@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../../services/config";
 import Loading from "../../components/Loading";
-import Card from "../../components/Card";
+import CardProduct from "../../components/CardProduct";
+
 
 type productType = {
   id: number;
@@ -13,14 +14,9 @@ type productType = {
   createdAt: string;
 };
 
-type queryType = {
-  page: number;
-};
-
-const ProductPage = () => {
+const ProductsPageGet = () => {
   const [products, setProducts] = useState<productType[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [query, setQuery] = useState<queryType>({ page: 0 });
 
   const paginationNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -49,7 +45,7 @@ const ProductPage = () => {
     <>
       <div className="mb-9 flex flex-wrap">
         {products.map((product) => (
-          <Card key={product.id} data={product} />
+          <CardProduct key={product.id} data={product} />
         ))}
       </div>
       <footer className="flex flex-row  justify-center items-center  gap-8 m-12">
@@ -67,7 +63,7 @@ const ProductPage = () => {
               setCurrentPage(pageNumber);
             }}
           >
-            {pageNumber} 
+            {pageNumber}
           </button>
         ))}
         {currentPage < 10 && <button onClick={handleNext}>Next</button>}
@@ -76,4 +72,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default ProductsPageGet;

@@ -9,15 +9,19 @@ const CategoryPagePost = () => {
   };
 
   return (
-    <div>
-      <label htmlFor="input">Category Name</label>
+    <div className="flex flex-col m-auto w-80 mt-20 bg-slate-300 shadow-lg rounded-md p-5">
+      <label htmlFor="input" className="font-medium mb-2">
+        Category Name :
+      </label>
       <input
+        className="p-2 rounded-md"
         type="text"
         name="input"
         placeholder="Category..."
         onChange={(e) => setValue(e.target.value)}
       />
-      <button type="submit" onClick={handleClick}>
+      <button 
+        className="bg-gray-700 p-4 rounded-md text-white mt-2" type="submit" onClick={handleClick}>
         ADDED
       </button>
     </div>
