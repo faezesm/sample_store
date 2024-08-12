@@ -38,6 +38,9 @@ const ProductPage = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
+        // await api.get<productType[]>(`api/products/?page=${currentPage}`).then((res) => {
+        //   setProducts(res.data);
+        // });
         setProducts(await api.get(`api/products/?page=${currentPage}`));
       } catch (error) {
         console.log(error);
@@ -67,7 +70,7 @@ const ProductPage = () => {
               setCurrentPage(pageNumber);
             }}
           >
-            {pageNumber} 
+            {pageNumber}
           </button>
         ))}
         {currentPage < 10 && <button onClick={handleNext}>Next</button>}

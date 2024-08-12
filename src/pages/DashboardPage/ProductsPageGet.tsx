@@ -4,7 +4,7 @@ import Loading from "../../components/Loading";
 import CardProduct from "../../components/CardProduct";
 
 
-type productType = {
+export type productType = {
   id: number;
   title: string;
   categoryTitle: string;

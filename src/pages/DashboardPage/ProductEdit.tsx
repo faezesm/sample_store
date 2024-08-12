@@ -52,6 +52,7 @@ const ProductEdit = () => {
   useEffect(() => {
     const fetch = async () => {
       const res = await api.get(`api/products/${id}`);
+      console.log(res)
       setValues(res)
       
     };

@@ -24,6 +24,7 @@ const Card = ({ data }: Props) => {
   return (
     <div className="flex flex-col p-4 justify-center w-2/5 shadow-md shadow-black rounded-md m-6">
       <h2 className="font-bold">{title.toUpperCase()} 😇</h2>
+      <p>{id}</p>
       <p className="font-medium text-gray-500">{categoryTitle}</p>
       <span>RealPrice: {realPrice}</span>
       <span>SalesPrice: {salesPrice}</span>

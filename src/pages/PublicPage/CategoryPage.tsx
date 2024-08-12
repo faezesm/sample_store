@@ -19,10 +19,10 @@ const CategoryPage = () => {
 
   return (
     <>
-      <h1>List of Categories</h1>
-      <div >
+      <h1 className="m-10 font-bold">List of Categories</h1>
+      <div className="m-10 flex flex-col gap-4 ">
         {categories?.map((category) => (
-          <CardCategory key={category.id} data={category} />
+          <CardCategory   key={category.id} data={category} />
         ))}
       </div>
     </>
